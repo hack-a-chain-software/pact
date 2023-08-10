@@ -217,6 +217,11 @@ defaultGasTable =
   ,("scalar-mult", 1)
   ,("point-add", 1)
   ,("pairing-check", 1)
+
+  -- Modular inverse
+  ,("egcd", 3)
+  ,("keccak256-bs", 13)
+  ,("poseidon-hash", 8)
   ]
 
 {-# NOINLINE defaultGasTable #-}

@@ -221,6 +221,9 @@ allTests = HM.fromList
     , ("point-add", pointAddTests)
     , ("scalar-mult", scalarMulTests)
     , ("pairing-check", pairingCheckTests)
+    , ("egcd", egcdTests)
+    , ("keccak256-bs", keccak256bsTests)
+    , ("poseidon-hash", poseidonTests)
 
       -- Non-native concepts to benchmark
     , ("use", useTests)
@@ -2000,3 +2003,29 @@ pairingCheckTests = defGasUnitTests allExprs
     , 'y: [8495653923123431417604973247489272438418190587263600148770280649306958101930, 4082367875863433681332203403145435568316851327593401208105741076214120093531]}]
     )|]
   allExprs = fmap defPactExpression [pairingCheck]
+
+egcdTests :: NativeDefName -> GasUnitTests
+egcdTests = defGasUnitTest $ PactExpression egcdExprText Nothing
+  where
+    egcdExprText = [text|
+    (egcd 3 26)
+    (egcd 5865413254 646787313212)
+    (egcd 98765432109876543212 12345678901234567896)
+    |]
+
+keccak256bsTests :: NativeDefName -> GasUnitTests
+keccak256bsTests = defGasUnitTest $ PactExpression keccak256bsExprText Nothing
+  where
+    keccak256bsExprText = [text|
+    (keccak256-bs 64 4637928374822348932)
+    (keccak256-bs 128 86734239273823482392374839238192)
+    (keccak256-bs 256 2939802230983298498274024970323894828329382938283938293283)
+    |]
+
+poseidonTests:: NativeDefName -> GasUnitTests
+poseidonTests = defGasUnitTest $ PactExpression poseidonExprText Nothing
+  where
+    poseidonExprText = [text|
+    (poseidon-hash 1 2)
+    (poseidon-hash 999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999 88888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888)
+    |]
